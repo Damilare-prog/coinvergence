@@ -122,7 +122,7 @@ export default function Home() {
 
   return (
     <div
-      dangerouslySetInnerHTML={ __html: getHTML() }
+      dangerouslySetInnerHTML={{ __html: getHTML() }}
       suppressHydrationWarning
     />
   );
