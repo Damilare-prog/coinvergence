@@ -1,11 +1,25 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 
-const AuthContext = createContext(null);
+interface User {
+  name: string;
+  email: string;
+  phone: string;
+  createdAt: string;
+}
 
-export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null);
+interface AuthContextType {
+  user: User | null;
+  login: (userData: User) => void;
+  logout: () => void;
+  isLoaded: boolean;
+}
+
+const AuthContext = createContext<<AuthContextType | null>(null);
+
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [user, setUser] = useState<User | null>(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -16,7 +30,7 @@ export function AuthProvider({ children }) {
     setIsLoaded(true);
   }, []);
 
-  const login = (userData) => {
+  const login = (userData: User) => {
     localStorage.setItem("coinvergence_user", JSON.stringify(userData));
     setUser(userData);
   };
