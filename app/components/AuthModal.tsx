@@ -1,14 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useState, FormEvent } from "react";
 import { useAuth } from "./AuthContext";
 import { X, UserPlus, LogIn, ArrowRight, MessageCircle } from "lucide-react";
 
-export default function AuthModal({ isOpen, onClose, defaultMode = "signup" }) {
+interface AuthModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  defaultMode?: "signup" | "signin";
+}
+
+interface FormData {
+  name: string;
+  email: string;
+  phone: string;
+  password: string;
+}
+
+export default function AuthModal({ isOpen, onClose, defaultMode = "signup" }: AuthModalProps) {
   const { login } = useAuth();
-  const [mode, setMode] = useState(defaultMode);
+  const [mode, setMode] = useState<<"signup" | "signin">(defaultMode);
   const [success, setSuccess] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<<FormData>({
     name: "",
     email: "",
     phone: "",
@@ -17,10 +30,10 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signup" }) {
 
   if (!isOpen) return null;
 
-  const handleChange = (e) =>
+  const handleChange = (e: React.ChangeEvent<<HTMLInputElement>) =>
     setFormData((p) => ({ ...p, [e.target.name]: e.target.value }));
 
-  const handleSignup = (e) => {
+  const handleSignup = (e: FormEvent) => {
     e.preventDefault();
     const user = {
       name: formData.name,
@@ -32,10 +45,18 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signup" }) {
     setSuccess(true);
   };
 
-  const handleSignin = (e) => {
+  const handleSignin = (e: FormEvent) => {
     e.preventDefault();
-    const name = formData.email.split("@")[0].replace(/[._]/g, " ").replace(/\b\w/g, (l) => l.toUpperCase());
-    login({ name, email: formData.email, phone: "", createdAt: new Date().toISOString() });
+    const name = formData.email
+      .split("@")[0]
+      .replace(/[._]/g, " ")
+      .replace(/\b\w/g, (l) => l.toUpperCase());
+    login({
+      name,
+      email: formData.email,
+      phone: "",
+      createdAt: new Date().toISOString(),
+    });
     setSuccess(true);
   };
 
@@ -65,7 +86,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signup" }) {
               </svg>
             </div>
             <h3 className="text-xl font-bold mb-2">{mode === "signup" ? "Account Created!" : "Welcome Back!"}</h3>
-            <p className="text-sm text-gray-400 mb-6">You're ready to trade on WhatsApp.</p>
+            <p className="text-sm text-gray-400 mb-6">You&apos;re ready to trade on WhatsApp.</p>
             <button onClick={openWhatsApp} className="w-full py-3.5 rounded-xl bg-gradient-to-r from-green-500 to-green-600 text-white font-semibold flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-green-500/20 transition-all">
               <MessageCircle size={20} />
               Start Trading on WhatsApp
@@ -134,7 +155,7 @@ export default function AuthModal({ isOpen, onClose, defaultMode = "signup" }) {
               </button>
             </form>
             <div className="mt-6 text-center">
-              <p className="text-sm text-gray-400">Don't have an account? <button onClick={() => setMode("signup")} className="text-violet-400 hover:text-violet-300 font-medium">Sign Up</button></p>
+              <p className="text-sm text-gray-400">Don&apos;t have an account? <button onClick={() => setMode("signup")} className="text-violet-400 hover:text-violet-300 font-medium">Sign Up</button></p>
             </div>
             <div className="mt-6 pt-6 border-t border-white/5">
               <button onClick={skipAndTrade} className="w-full py-3 rounded-xl border border-white/10 text-gray-400 hover:text-white hover:border-white/20 transition-all text-sm flex items-center justify-center gap-2">
