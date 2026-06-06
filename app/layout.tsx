@@ -191,7 +191,7 @@ body{font-family:'Inter',sans-serif;background:#020617;color:#f8fafc;overflow-x:
 .bybit-badge{background:linear-gradient(135deg,#F7A600,#FF9900);color:#000;font-weight:700}
 @media(max-width:640px){.hero-title{font-size:2.5rem!important;line-height:1.1!important}}` }} />
       </head>
-      <body style={ margin: 0, padding: 0, background: '#020617', color: '#f8fafc', fontFamily: 'Inter, sans-serif' }>
+      <body style={{ margin: 0, padding: 0, background: '#020617', color: '#f8fafc', fontFamily: 'Inter, sans-serif' }}>
         {children}
       </body>
     </html>
