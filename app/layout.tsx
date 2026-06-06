@@ -36,7 +36,6 @@ export default function RootLayout({
             }
           }
         ` }} />
-        <style dangerouslySetInnerHTML={{ __html: `/* CSS will be injected here from constants.ts */` }} />
       </head>
       <body style={{ margin: 0, padding: 0, background: '#020617', color: '#f8fafc', fontFamily: 'Inter, sans-serif' }}>
         {children}
